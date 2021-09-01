@@ -49,9 +49,8 @@ ingress:
   hosts:
     - host: fidelis-wp.jacstack05.jacexperts.io
       paths:
-        - "/"
-        # - path: /
-        #   pathType: ImplementationSpecific
+        - path: /
+          pathType: ImplementationSpecific
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
