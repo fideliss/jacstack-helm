@@ -27,6 +27,14 @@ spec:
       serviceAccountName: {{ include "fidelis.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      volumes:
+      - configMap:
+          defaultMode: 509
+          name: config-theia
+        name: config
+      - name: volume-theia-pod
+        persistentVolumeClaim:
+          claimName: volume-theia
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
