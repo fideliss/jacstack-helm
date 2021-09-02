@@ -72,7 +72,7 @@ livenessProbe:
   httpGet:
     path: /
     port: http
-    
+
 readinessProbe:
   httpGet:
     path: /
@@ -90,3 +90,11 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+configmap:
+  metadata:
+    name: config-theia
+    # namespace: theia-fidelis
+  data:
+    teste-arquivo: |-
+        Esse é o arquivo
