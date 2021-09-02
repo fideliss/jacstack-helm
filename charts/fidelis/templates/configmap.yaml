@@ -1,13 +1,24 @@
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: {{ .Values.configmap.metadata.name }}
+#   labels:
+#     {{- include "fidelis.labels" . | nindent 4 }}
+
+# {{- with .Values.configmap.data}}
+# data:
+#   {{- toYaml . | nindent 2 }}
+# {{- end}}
+
+{{- if .Values.configMap.created }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Values.configmap.metadata.name }}
+  name: {{ .Values.configMap.name }}
   labels:
-    {{- include "fidelis.labels" . | nindent 4 }}
-
-{{- with .Values.configmap.data}}
+    {{- include "theia-ruan.labels" . | nindent 4 }}
+{{ with .Values.configMap.data }}
 data:
   {{- toYaml . | nindent 2 }}
-{{- end}}
-# data:
-#   teste-arquivo: {{ .Values.configmap.data.conteudo }}
+{{- end }}
+{{- end -}}

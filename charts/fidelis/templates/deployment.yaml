@@ -27,14 +27,6 @@ spec:
       serviceAccountName: {{ include "fidelis.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      volumes:
-      - configMap:
-          defaultMode: 509
-          name: config-theia
-        name: config
-      - name: volume-theia-pod
-        persistentVolumeClaim:
-          claimName: volume-theia
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -45,11 +37,6 @@ spec:
             - name: http
               containerPort: 3000
               protocol: TCP
-          volumeMounts:
-            - mountPath: /home/project/
-              name: volume-theia-pod
-            - mountPath: /home/project/configManual
-              name: config
           {{- with .Values.livenessProbe}}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
@@ -60,6 +47,11 @@ spec:
           {{- end}}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          {{- if .Values.configMap.created }}
+          volumeMounts:
+          - mountPath: {{ .Values.configMap.path }}
+            name: {{ .Values.configMap.name }}
+          {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -71,4 +63,11 @@ spec:
       {{- with .Values.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.configMap.created }}
+      volumes:
+      - configMap:
+          defaultMode: 509
+          name: {{ .Values.configMap.name }}
+        name: {{ .Values.configMap.name }}
       {{- end }}

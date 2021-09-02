@@ -91,10 +91,19 @@ tolerations: []
 
 affinity: {}
 
-configmap:
-  metadata:
-    name: config-theia
-    # namespace: theia-fidelis
-  data:
+# configmap:
+#   metadata:
+#     name: config-theia
+#     # namespace: theia-fidelis
+#   data:
+#     teste-arquivo: |-
+#         Esse é o arquivo
+
+configMap:
+  created: true
+  name: config
+  path: /home/project/config
+  data: 
     teste-arquivo: |-
-        Esse é o arquivo
+       Esse é o arquivo
+
