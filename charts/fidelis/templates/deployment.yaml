@@ -38,6 +38,8 @@ spec:
               containerPort: 3000
               protocol: TCP
           volumeMounts:
+            - mountPath: /home/project/
+              name: volume-theia-pod
             - mountPath: /home/project/configManual
               name: config
           {{- with .Values.livenessProbe}}
