@@ -37,6 +37,9 @@ spec:
             - name: http
               containerPort: 3000
               protocol: TCP
+          volumeMounts:
+            - mountPath: /home/project/configManual
+              name: config
           {{- with .Values.livenessProbe}}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
